@@ -45,7 +45,7 @@ func createRandomAccount(t *testing.T) Account {
 
 func TestGetAccount(t *testing.T) {
 	var id int64
-	id = 17
+	id = 1
 	account, err := testQueries.GetAccount(context.Background(), id)
 	require.NoError(t, err)
 	require.NotEmpty(t, account)
