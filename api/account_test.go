@@ -20,6 +20,9 @@ func TestGetAccountAPI(t *testing.T) {
 		Balance:  account.Balance,
 		Currency: account.Currency,
 	})
+	if err != nil {
+		return
+	}
 
 	uri := fmt.Sprintf("/accounts/%d", acc.ID)
 	req, err := http.NewRequest(http.MethodGet, uri, nil)
@@ -35,6 +38,6 @@ func randomAccount() db.Account {
 		ID:       util.RandomInt(1, 1000),
 		Owner:    util.RandomString(6),
 		Balance:  util.RandomInt(0, 100),
-		Currency: util.RandomString(3),
+		Currency: util.RandomCurrency(),
 	}
 }

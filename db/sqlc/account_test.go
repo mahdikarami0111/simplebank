@@ -9,9 +9,10 @@ import (
 )
 
 func TestCreateAccount(t *testing.T) {
+	tmp := creatRandomUser(t)
 	arg := CreateAccountParams{
-		Owner:    util.RandomString(6),
-		Currency: util.RandomString(3),
+		Owner:    tmp.Username,
+		Currency: util.RandomCurrency(),
 		Balance:  util.RandomInt(50, 1000),
 	}
 	acc, err := testQueries.CreateAccount(context.Background(), arg)
@@ -26,9 +27,10 @@ func TestCreateAccount(t *testing.T) {
 }
 
 func createRandomAccount(t *testing.T) Account {
+	tmp := creatRandomUser(t)
 	arg := CreateAccountParams{
-		Owner:    util.RandomString(6),
-		Currency: util.RandomString(3),
+		Owner:    tmp.Username,
+		Currency: util.RandomCurrency(),
 		Balance:  util.RandomInt(50, 1000),
 	}
 	acc, err := testQueries.CreateAccount(context.Background(), arg)
@@ -44,9 +46,14 @@ func createRandomAccount(t *testing.T) Account {
 }
 
 func TestGetAccount(t *testing.T) {
-	var id int64
-	id = 1
-	account, err := testQueries.GetAccount(context.Background(), id)
+	tmp := creatRandomUser(t)
+	arg := CreateAccountParams{
+		Owner:    tmp.Username,
+		Currency: util.RandomCurrency(),
+		Balance:  util.RandomInt(50, 1000),
+	}
+	acc, err := testQueries.CreateAccount(context.Background(), arg)
+	account, err := testQueries.GetAccount(context.Background(), acc.ID)
 	require.NoError(t, err)
 	require.NotEmpty(t, account)
 }
